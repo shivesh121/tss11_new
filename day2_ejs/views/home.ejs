@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		body{
+			background-color: #224545;
+		}
+	</style>
+</head>
+<body>
+<h1>This is home page</h1>
+
+<table align="center" width="300" border="1">
+	<tr>
+		<th>S.No.</th>
+		<th>Name</th>
+	</tr>
+	<% info.forEach(function(x, i){ %>
+			<tr>
+				<td><%= i+1 %></td>
+				<td><%= x %></td>
+			</tr>
+	<% }) %>
+
+
+
+</table>
+
+</body>
+</html>
