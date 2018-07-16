@@ -1,0 +1,15 @@
+
+<div class="container" style="height: auto;">
+	<h3>Home Page</h3>
+	<table class="table table-hover table-striped table-bordered">
+		<tr>
+			<th>S.No.</th>
+			<th>Color</th>
+		</tr>
+		<% data.forEach(function(x, n){ %>
+			<tr>
+				<td><%= n+1 %></td>
+				<td><%= x %></td>
+	<% }) %>
+	</table>
+</div>
