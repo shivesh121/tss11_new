@@ -1,0 +1,57 @@
+<style type="text/css">
+	.form-login {
+	    background-color: #EDEDED;
+	    padding-top: 10px;
+	    padding-bottom: 20px;
+	    padding-left: 20px;
+	    padding-right: 20px;
+	    border-radius: 15px;
+	    border-color:#d2d2d2;
+	    border-width: 5px;
+	    box-shadow:0 1px 0 #cfcfcf;
+	}
+
+	h4 { 
+	 border:0 solid #fff; 
+	 border-bottom-width:1px;
+	 padding-bottom:10px;
+	 text-align: center;
+	}
+
+	.form-control {
+	    border-radius: 10px;
+	}
+
+	.wrapper {
+	    text-align: center;
+	}
+
+</style>
+
+
+<div class="container" style="min-height: 500px; height: auto; margin-top: 100px;">
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-offset-5 col-md-3">
+	            <div class="form-login">
+	            <h4>Welcome back.</h4>
+	            <form action="/" method="post">
+	            	
+	            <input type="text" id="userName" class="form-control input-sm chat-input" name="username" placeholder="username" />
+	            </br>
+	            <input type="password" id="userPassword" class="form-control input-sm chat-input" name="password" placeholder="password" />
+	            </br>
+	            <div class="wrapper">
+	            <span class="group-btn">     
+	                <input type="submit" value="Login" class="btn btn-primary btn-md" />
+	            </span>
+	            </div>
+	            </form>
+	            <%= msg %>
+	            </div>
+	        
+	        </div>
+	    </div>
+	</div>
+	
+</div>
