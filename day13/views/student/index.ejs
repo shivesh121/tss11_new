@@ -1,0 +1,68 @@
+<div class="container" style="min-height: 500px; height: auto; margin-top: 100px;">
+	<div class="well">
+		<form action="/user/upload" method="post" enctype="multipart/form-data">
+			Name <input type="text" name="name" />
+			Select File <input type="file" name="photo" />
+			<br />
+			<input type="submit" class="btn btn-success" value="Upload">
+		</form>
+		<h2>All Student</h2>
+		<h4>Add New Student <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add</button></h4>
+	</div>
+	<table class="table table-bordered">
+		<tr>
+			<th>S.No.</th>
+			<th>Name</th>
+			<th>Age</th>
+			<th>City</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<% stu.forEach(function(res, i){ %>
+			<tr>
+				<td><%= i+1 %></td>
+				<td><%= res.full_name %></td>
+				<td <% if(res.age=="25"){ %> <%= "style=color:red" %> <% } %>><%= res.age %></td>
+				<td><%= res.city %></td>
+				<td><a href="/edit/<%= res.id %>" class="btn btn-info">Edit</a></td>
+				<td><a href="/delete/<%= res.id %>"class="btn btn-danger">Delete</a></td>
+			</tr>
+	<% }) %>
+	</table>
+</div>
+
+
+<div class="modal fade" id="addModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Add New Student</h3>
+			</div>
+
+			<div class="modal-body">
+				<form action="/" method="post">
+					<div class="form-group">
+						<label>Full Name</label>
+						<input type="text" placeholder="Full Name" name="full_name" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>Age</label>
+						<input type="text" placeholder="Full Name" name="age" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>City</label>
+						<select name="city" class="form-control">
+							<option>Select</option>
+							<% city.forEach(function(res, i){ %>
+								<option><%= res.name %></option>
+							<% }) %>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Add" class="btn btn-success">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
