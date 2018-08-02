@@ -21,9 +21,15 @@ app.use(upload());
 
 app.use(function(req, res, next){
 	res.locals.session = req.session;
-	var cart_str = req.cookies.cart_cookie;
-	var arr = cart_str.split("#");
-	res.locals.total = arr.length;
+	// console.log(req.cookies);
+	res.locals.total=0;
+	if(req.cookies.cart_cookie)
+	{
+		var cart_str = req.cookies.cart_cookie;
+		var arr = cart_str.split("#");
+		res.locals.total = arr.length;
+		
+	}
 	next();
 });
 /* ---------- PFD Converter CODE  -----------*/

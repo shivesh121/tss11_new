@@ -21,11 +21,25 @@ routes.get("/add/:id", function(req, res){
 routes.get("/mycart", function(req, res){
 	var cartsrt = req.cookies.cart_cookie;
 	var arr = cartsrt.split("#");
-	
-	var pageData = { title : "My Cart", pagename : "cart/index", pro : result};
-	res.render("layout", pageData);
+	var str="";
+	var l = arr.length-1;
+	arr.forEach(function(id, n){
+		if(l==n)
+			str+="id = "+id;
+		else
+			str+="id = "+id+" OR ";
+	});
+	product.selectWhere(str, function(err, result){
+		console.log(result);
+		var pageData = { title : "My Cart", pagename : "cart/index", pro : result};
+		res.render("layout", pageData);
+	});
 });
-			
+
+routes.get("/clear", function(req, res){
+	res.clearCookie("cart_cookie");
+	res.redirect("/product");
+});		
 
 
 module.exports=routes;

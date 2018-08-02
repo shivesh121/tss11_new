@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<table align="center">
+	<tr>
+		<th>S.No.</th>
+		<th>Full Name</th>
+		<th>Username</th>
+	</tr>
+	<% res.forEach(function(data, i){ %>
+	<tr>
+		<td><%= i+1 %></td>
+		<td><%= data.full_name %></td>
+		<td><%= data.username %></td>
+	</tr>
+ <% }) %>
+</table>
+</body>
+</html>
