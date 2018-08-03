@@ -1,0 +1,30 @@
+<div class="container" style="min-height: 500px; height: auto; margin-top: 100px;">
+	<div class="well">
+		
+		<h2>All Product</h2>
+	
+	</div>
+	<div class="col-md-12 col-sm-12">
+		<% pro.forEach(function(res){ %>
+
+			<div class="col-md-3 col-sm-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<%= res.product_name %>
+					</div>
+					<div class="panel-body">
+						<img height="150" width="100" src="/images/<%= res.image %>" />
+						<br />
+						<b><%= res.price %></b>
+					</div>
+					<div class="panel-footer">
+						<a href="/cart/add/<%= res.id %>" class="btn btn-sm btn-info">Add to Cart</a>
+					</div>
+				</div>
+			</div>
+	<% }) %>
+	</div>
+	
+</div>
+
+
