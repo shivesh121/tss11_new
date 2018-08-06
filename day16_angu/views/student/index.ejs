@@ -1,8 +1,9 @@
 <div ng-app="myApp" ng-controller="myCtrl" class="container" style="min-height: 500px; height: auto; margin-top: 100px;">
 
 	<div class="well">
+		<!-- <pre ng-bind="newData | json"></pre> -->
 		<h2>All Student</h2>
-		<h4>Add New Student <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add</button></h4>
+		<h4>Add New Student <button class="btn btn-primary" data-toggle="modal" data-target="#addModal" ng-click="getCity()">Add</button></h4>
 	</div>
 	
 	<table class="table table-bordered">
@@ -19,12 +20,10 @@
 			<td ng-bind="a.full_name"></td>
 			<td ng-bind="a.age"></td>
 			<td ng-bind="a.city"></td>
-			<td></td>
-			<td></td>
-
+			<td><button class="btn btn-info">Edit</button>
+			<td><button data-toggle="modal" data-target="#delModal" class="btn btn-danger" ng-click="askDelete(a)">Delete</button>
 		</tr>
 	</table>
-</div>
 
 
 <div class="modal fade" id="addModal">
@@ -34,26 +33,49 @@
 				<h3>Add New Student</h3>
 			</div>
 			<div class="modal-body">
-				<form action="/" method="post">
 					<div class="form-group">
 						<label>Full Name</label>
-						<input type="text" placeholder="Full Name" name="full_name" class="form-control">
+						<input ng-model="newData.full_name" type="text" placeholder="Full Name" name="full_name" class="form-control">
 					</div>
 					<div class="form-group">
 						<label>Age</label>
-						<input type="text" placeholder="Full Name" name="age" class="form-control">
+						<input type="text" ng-model="newData.age"  placeholder="Full Name" name="age" class="form-control">
 					</div>
 					<div class="form-group">
 						<label>City</label>
-						<select name="city" class="form-control">
+						<select name="city" ng-model="newData.city" class="form-control" ng-options="x.name for x in cities">
+							<option>Select</option>
+							
 							
 						</select>
 					</div>
 					<div class="form-group">
-						<input type="submit" value="Add" class="btn btn-success">
+						<input type="button"  ng-click="add()" value="Add" class="btn btn-success">
+						<button class="btn btn-danger" data-dismiss="modal">Close</button>
+						<p ng-bind-html="msg"></p>
 					</div>
-				</form>
 			</div>
 		</div>
 	</div>
+</div>
+<div class="modal fade" id="delModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Delete !</h3>
+			</div>
+			<div class="modal-body">
+				<p>Are You Sure want to Delete This <b>{{ selectedObj.full_name }}</b> !</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Close</button>
+				<button ng-click="delete()" class="btn btn-danger" data-dismiss="modal">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
 </div>

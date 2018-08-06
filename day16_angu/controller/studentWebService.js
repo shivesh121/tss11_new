@@ -10,21 +10,31 @@ routes.get("/", function(req, res){
 });
 
 
-
-
-
-
-
-
-
 routes.post("/", function(req, res){
 	// console.log(req.body);
 
 	student.addNew(req.body, function(err, result){
 		console.log(result);
-		res.redirect("/");
+		result=JSON.parse(JSON.stringify(result));
+		var id = result.insertId;
+		student.selectById(id, function(err, result){
+			res.send(result[0]);
+		});
 	});
 });
+
+
+
+
+
+
+routes.get("/cityWebService", function(req, res){
+	city.selectAll(function(err, result){
+		res.send(result);
+	});
+});
+
+
 
 
 routes.get("/delete/:id", function(req, res){
@@ -33,7 +43,8 @@ routes.get("/delete/:id", function(req, res){
 	var id = req.params.id;
 	student.deleteWhere(id, function(err, result){
 		console.log(result);
-		res.redirect("/");
+		res.send(result);
+		// res.redirect("/");
 	});
 });
 routes.get("/edit/:id", function(req, res){
