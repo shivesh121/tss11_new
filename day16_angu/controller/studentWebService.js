@@ -47,6 +47,9 @@ routes.get("/delete/:id", function(req, res){
 		// res.redirect("/");
 	});
 });
+
+
+
 routes.get("/edit/:id", function(req, res){
 	var id = req.params.id;
 	student.selectById(id, function(err, result1){

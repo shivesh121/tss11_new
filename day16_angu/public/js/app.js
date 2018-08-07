@@ -1,8 +1,13 @@
 var app = angular.module("myApp", ['ngSanitize']);
+
+
 app.controller("myCtrl", function($scope, $http){
+	$scope.newData={};
+
+
 
 	$scope.getCity=function(){
-		$scope.newData={};
+		
 		$http({
 			url : "/studentWebService/cityWebService",
 			method :"get"
@@ -12,11 +17,12 @@ app.controller("myCtrl", function($scope, $http){
 		});
 
 	}
-
-
-
 	$scope.msg="";
-	$scope.newData={};
+
+	
+	
+
+
 	$scope.arr=[];
 	$http({
 		url : "/studentWebService",
@@ -26,17 +32,38 @@ app.controller("myCtrl", function($scope, $http){
 		$scope.arr=res.data;
 
 	});
+
+
+
 	$scope.add=function(){
+		// $scope.newData.city=$scope.newData.city.name;
 		// console.log($scope.newData);
-		$http({
-			url : "/studentWebService",
-			method : "post",
-			data : $scope.newData
-		}).then(function(res){
-			console.log(res.data);
-			$scope.arr.push(res.data);
-			$scope.msg="<b>"+res.data.full_name+"</b>Data Add Successfuly ";
-		});
+		if($scope.newData.id)
+		{
+			$http({
+				url : "/studentWebService/edit/"+$scope.newData.id,
+				method : "post",
+				data : $scope.newData
+			}).then(function(res){
+				$scope.arr[$scope.index]=$scope.newData;
+				$("#addModal").modal("hide");
+				// $scope.msg="<b>"+$scope.newData.full_name+"</b>Data Update Successfuly ";
+
+			});
+		}
+		else
+		{
+			$http({
+				url : "/studentWebService",
+				method : "post",
+				data : $scope.newData
+			}).then(function(res){
+				console.log(res.data);
+				$scope.arr.push(res.data);
+				$scope.msg="<b>"+res.data.full_name+"</b>Data Add Successfuly ";
+			});	
+		}
+		
 	}
 
 	$scope.askDelete=function(obj){
@@ -52,6 +79,14 @@ app.controller("myCtrl", function($scope, $http){
 			var i = $scope.arr.indexOf($scope.selectedObj);
 			$scope.arr.splice(i, 1);
 		});
+	}
+
+	$scope.beforeEdit=function(obj){
+		$scope.getCity();
+		// $scope.newData=obj;
+		$scope.index = $scope.arr.indexOf(obj);
+		console.log($scope.index);
+		angular.copy(obj, $scope.newData);
 	}
 	
 
