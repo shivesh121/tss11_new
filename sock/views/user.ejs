@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		var io = io.connect();
+
+		io.on("onlineuser", function(data){
+			// console.log(data);
+			$(".list-group").html("");
+			var code="";
+			data.forEach(function(x){
+				code +="<li class='list-group-item'><a onclick='selectuser(\""+x+"\")' href='#'>"+x+"</a></li>";
+			});
+			$(".list-group").html(code);
+		});
+		var obj={};
+		io.on("currentUser", function(cuser){
+			obj=cuser;
+			// console.log(cuser);
+			$("#you").html(obj.name);
+
+		});
+
+		function selectuser(x)
+		{
+			$("#s_user").html(x);
+		}
+		function send()
+		{
+			var sendObj={};
+			sendObj.to = $("#s_user").html();
+			var sendFrom = $("#you").html();
+
+
+
+		}
+
+	</script>
+</head>
+<body>
+<div class="container">
+	<div class="col-md-4">
+	<h1>Logged In User</h1>
+	<ul class="list-group">
+	  <li class="list-group-item">First item</li>
+	  <li class="list-group-item">Second item</li>
+	  <li class="list-group-item">Third item</li>
+	</ul>
+	</div>
+	<div class="col-md-5 col-md-offset-1">
+		<h3>Chat Box</h3>
+		<h3>You <span class="label label-info" id="you"></span>
+		<h4>Chat With<span class="label label-warning" id="s_user"></span></h4>
+		<textarea class="form-control" rows="20"></textarea>
+		<br />
+		<input type="text" class="form-control" placeholder="Message">
+		<br />
+		<button class="btn btn-success" onclick="send()">Send</button>
+	</div>
+</div>
+</body>
+</html>
