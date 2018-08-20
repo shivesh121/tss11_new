@@ -17,32 +17,50 @@
 			// console.log(data);
 			$(".list-group").html("");
 			var code="";
-			data.forEach(function(x){
-				code +="<li class='list-group-item'><a onclick='selectuser(\""+x+"\")' href='#'>"+x+"</a></li>";
-			});
+			for(var user in data){
+				code +="<li class='list-group-item'><a onclick='selectuser(\""+data[user]+"\", \""+user+"\")' href='#'>"+user+"</a></li>";
+			}
 			$(".list-group").html(code);
-		});
-		var obj={};
+			});
+		// });
+		var currentUser="";
 		io.on("currentUser", function(cuser){
-			obj=cuser;
+			// obj=cuser;
+			currentUser=cuser;
 			// console.log(cuser);
-			$("#you").html(obj.name);
+			$("#you").html(cuser);
 
 		});
 
-		function selectuser(x)
+
+		io.on("message", function(data){
+			var old = $("#show_msg").html();
+			old += "<b>"+data.sender+"</b>: "+data.msg+"</br >";
+			$('#show_msg').html(old);
+		});
+
+
+		var selectuserid="";
+		function selectuser(x, y)
 		{
-			$("#s_user").html(x);
+			selectuserid=x;
+			$("#s_user").html(y);
 		}
 		function send()
 		{
 			var sendObj={};
-			sendObj.to = $("#s_user").html();
-			var sendFrom = $("#you").html();
+			sendObj.sender=currentUser;
+			sendObj.recId = selectuserid;
+			sendObj.msg = $("#msg").val();
+			console.log(sendObj);
+			io.emit("message", sendObj);
 
 
 
 		}
+
+
+
 
 	</script>
 </head>
@@ -60,9 +78,9 @@
 		<h3>Chat Box</h3>
 		<h3>You <span class="label label-info" id="you"></span>
 		<h4>Chat With<span class="label label-warning" id="s_user"></span></h4>
-		<textarea class="form-control" rows="20"></textarea>
+		<div class="well" id="show_msg" style="min-height: 400px; overflow-y:scroll;"></div>
 		<br />
-		<input type="text" class="form-control" placeholder="Message">
+		<input type="text" class="form-control"  id="msg" placeholder="Message">
 		<br />
 		<button class="btn btn-success" onclick="send()">Send</button>
 	</div>
