@@ -16,7 +16,7 @@ login.controller("loginCtrl", function($scope, $http, $timeout, $window){
 			console.log(res);
 			if(res.data)
 			{
-				$window.location.href="/user";
+				$window.location.href="/student";
 			}
 			else
 			{
