@@ -5,12 +5,16 @@
 	<script type="text/javascript" src="/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.js"></script>
 	<script type="text/javascript" src="/js/angular.min.js"></script>
-	<script type="text/javascript" src="/js/login.js"></script>
+	<script type="text/javascript" src="/js/student.js"></script>
 	<script type="text/javascript" src="/js/navbar.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<script type="text/javascript">
+		// console.log(document.cookie);
+		
+	</script>
 </head>
-<body ng-controller="<%= ctrlName; %>">
+<body ng-controller="<%= ctrlName; %>" ng-init="getAll()">
 	<nav class="navbar navbar-inverse sidebar" role="navigation">
 	    <div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -68,36 +72,70 @@
 		<div class="container">
 			<div class="well">
 				<h2>The Stepping Stone</h2>
+				<button class="btn btn-success" data-target="#addModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Add New</button>
 			</div>
+		</div>
+		<div class="row">
+			<table class="table table-striped table-bordered table-hover">
+				<tr>
+					<td>S.No.</td>
+					<td>Full Name</td>
+					<td>Fee</td>
+					<td>City</td>
+					<td>State</td>
+				</tr>
+				<tr ng-repeat="row in allStu">
+					<td ng-bind="($index+1)+pagination.skip"></td>
+					<td ng-bind="row.full_name"></td>
+					<td ng-bind="row.fee"></td>
+					<td ng-bind="row.city"></td>
+					<td ng-bind="row.state"></td>
+				</tr>
+			</table>
+			<ul class="pagination">
+				<li ng-repeat="x in [] | myloop : pages"><a ng-click="pagecall(x)" href="#">{{ x }}</a></li>
+				
+			</ul>
 		</div>
 	</div>
 
 
-<div class="modal fade" id="loginModal">
+<div class="modal fade" id="addModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2>User Login</h2>
+				<h2>Add New Student</h2>
+				<pre ng-bind="student|json"></pre>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label>Username</label>
-					<input ng-model="loginObj.username" type="text" placeholder="Username" value="james" class="form-control">
+					<label>Full Name</label>
+					<input ng-model="student.full_name" type="text" placeholder="Full Name" class="form-control">
 				</div>
 				<div class="form-group">
-					<label>Password</label>
-					<input ng-model="loginObj.password" type="password" placeholder="Password" value="11" class="form-control">
+					<label>Fee</label>
+					<input ng-model="student.fee" type="text" placeholder="Full Name" class="form-control">
 				</div>
-				<div class="alert alert-danger" ng-show="msgShow">
-					<p> {{ msg }}
-					<a href="#" class="close" ng-click="msgShow=false">X</a>
-					</p>
+				<div class="form-group">
+					<label>City</label>
+					<!-- <input ng-model="user.full_name" type="text" placeholder="Full Name" class="form-control"> -->
+					<select class="form-control" ng-model="student.city" ng-options="x.id as x.name for x in cities">
+						<option value="">Select</option>
+					</select>
 				</div>
+				<div class="form-group">
+					<label>State</label>
+					<!-- <input ng-model="user.full_name" type="text" placeholder="Full Name" class="form-control"> -->
+					<select class="form-control" ng-model="student.state" ng-options="y.id as y.name for y in states">
+						<option value="">Select</option>
+					</select>
+				</div>
+				
 			</div>
 			
 			<div class="modal-footer">
 				<img src="/image/2.gif" ng-show="preShow"/>
-				<button class="btn btn-success" ng-click="login()">Login</button>
+				<button class="btn btn-success" ng-click="add()">Add</button>
 				<button data-dismiss="modal" class="btn btn-danger">Close</button>
 			</div>
 		</div>

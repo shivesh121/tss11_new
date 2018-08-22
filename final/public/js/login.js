@@ -1,6 +1,6 @@
 var login = angular.module("loginApp", []);
 login.controller("loginCtrl", function($scope, $http, $timeout, $window){
-	$scope.loginObj = {};
+	$scope.loginObj = { username : "james", password : "11"};
 
 	$scope.msg="";
 	$scope.msgShow=false;

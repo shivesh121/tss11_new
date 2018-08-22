@@ -15,10 +15,17 @@ routes.post("/add", function(req, res){
 	});
 });
 routes.get("/getAll", function(req, res){
-	
-	student.find({}, function(err, result){
-		res.send(result);
+	var s = parseInt(req.query.skip);
+	var l = parseInt(req.query.limit);
+	console.log(req.query);
+	student.findAllCount(function(err, result1){
+		student.find({}, s, l, function(err, result2){
+			var sendObj = {total : result1, result : result2};			
+			res.send(sendObj);
+		});
+
 	});
+
 });
 
 
